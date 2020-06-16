@@ -1,0 +1,59 @@
+<Project>
+
+  <PropertyGroup>
+    <StrideRuntime>true</StrideRuntime>
+    <StrideRuntimeNetStandard>true</StrideRuntimeNetStandard>
+  </PropertyGroup>
+  
+  <Import Project="..\..\targets\Stride.props" />
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+  
+  <PropertyGroup>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <StrideAssemblyProcessor>true</StrideAssemblyProcessor>
+    <StridePackAssets>true</StridePackAssets>
+    <StrideBuildTags>*</StrideBuildTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\shared\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\core\Stride.Core.Mathematics\Stride.Core.Mathematics.csproj" />
+    <ProjectReference Include="..\Stride.Graphics\Stride.Graphics.csproj" />
+    <ProjectReference Include="..\Stride.Rendering\Stride.Rendering.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Update="Shaders\LinePrimitiveShader.cs">
+      <DesignTime>True</DesignTime>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LinePrimitiveShader.sdsl</DependentUpon>
+    </Compile>
+    <Compile Update="Shaders\PrimitiveShader.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PrimitiveShader.sdsl</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Shaders\LinePrimitiveShader.sdsl">
+      <Generator>StrideShaderKeyGenerator</Generator>
+      <LastGenOutput>LinePrimitiveShader.cs</LastGenOutput>
+    </None>
+    <None Update="Shaders\PrimitiveShader.sdsl">
+      <Generator>StrideShaderKeyGenerator</Generator>
+      <LastGenOutput>PrimitiveShader.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <Import Project="$(StrideSdkTargets)" />
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+
+</Project>
